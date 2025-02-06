@@ -3,10 +3,8 @@ import { Outlet } from "react-router-dom"
 
 export const Root = () => {
     return (
-        <div className="bg-[#242424] h-screen">
-          <header>
+        <div className="bg-[var(--bg-main-color)] h-screen">
             <Header/>
-          </header>
           <main className="flex flex-col justify-between">
             <Outlet/>
           </main> 

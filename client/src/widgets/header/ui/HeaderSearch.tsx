@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 
 export const HeaderSearch = () => {
   return (
-    <div className="relative ml-80">
+    <div className="relative ml-56">
       <Input
         className="bg-[var(--bg-input-color)] relative text-gray-400 py-2 px-12 rounded-lg"
         placeholder="Search"

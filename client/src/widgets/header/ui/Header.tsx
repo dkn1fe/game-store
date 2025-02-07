@@ -5,11 +5,11 @@ import { HeaderBasket } from "./HeaderBasket";
 export const Header = () => {
   return (
     <header>
-      <div className="absolute z-10 ">
+      <div className="absolute z-10">
         <HeaderSheet />
       </div>
       <div className="container pt-5">
-        <div className="flex justify-between">
+        <div className="flex w-full justify-between items-center">
           <HeaderSearch />
           <HeaderBasket />
         </div>

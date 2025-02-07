@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 import { Root } from "@/pages/Root"
+import { Home} from "@/pages/Home"
 
 
 export const routes = [
@@ -7,10 +8,10 @@ export const routes = [
         path:'/',
         element:<Root/>,
         children:[
-            // {
-            //     path:'/',
-            //     element:
-            // }
+            {
+                path:'/',
+                element:<Home/>
+            }
         ]
     }
 ]

@@ -1,10 +1,10 @@
 import { carouselItems } from "@/shared/constants/carouselItems";
 import { ShoppingBasket } from "lucide-react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./carousel.css";
-import { Link } from "react-router-dom";
 
 export const Carousel = () => {
   const settings = {
@@ -40,7 +40,7 @@ export const Carousel = () => {
             <div className="relative mt-10">
               <Link
                 to={item.link}
-                className="text-[#ee8efe] max-w-[200px] font-bold flex items-center gap-4 bg-[var(--bg-white)] rounded-xl p-3 px-8"
+                className="text-[#ee8efe] max-w-[200px] font-bold flex items-center gap-4 bg-[var(--white)] rounded-xl p-3 px-8"
               >
                 <ShoppingBasket color="#da00fd" />
                 Order Now

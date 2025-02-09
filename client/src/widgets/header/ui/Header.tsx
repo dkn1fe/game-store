@@ -5,7 +5,7 @@ import { HeaderBasket } from "./HeaderBasket";
 export const Header = () => {
   return (
     <header>
-      <div className="absolute z-10">
+      <div className="fixed z-10">
         <HeaderSheet />
       </div>
       <div className="container pt-5">

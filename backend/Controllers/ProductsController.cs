@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GameStore.Models;
 using GameStore.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameStore.Controllers
 {
@@ -38,6 +39,7 @@ namespace GameStore.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpPost("bulk")]
         public async Task<IActionResult> PostProducts([FromBody] List<Product> products)
         {
@@ -46,6 +48,7 @@ namespace GameStore.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeleteAllProducts()
         {

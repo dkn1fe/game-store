@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --bg-white:#fff;
+    --white:#fff;
     --bg-sheet-color:#2d2d2d;
     --bg-main-color:#242424;
     --bg-input-color: #383838;
     --secondary-color-icon:  #9ca3af;
-    --bg-main-color: #242424;
+    --bg-card:#323232;
   }
 }

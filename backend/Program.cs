@@ -9,6 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Добавление сервисов в контейнер DI
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("*") // Разрешить запросы с этого источника
+                .AllowAnyHeader() // Разрешить любые заголовки
+                .AllowAnyMethod(); // Разрешить любые HTTP-методы
+        });
+});
+
 // Получение строки подключения и имени базы данных из конфигурации
 var mongoConnectionString = Environment.GetEnvironmentVariable("DB_URI");
 var mongoDatabaseName = builder.Configuration["MongoDatabase"];
@@ -53,17 +64,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
 
 var app = builder.Build();
 

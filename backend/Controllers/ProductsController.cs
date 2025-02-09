@@ -39,8 +39,7 @@ namespace GameStore.Controllers
             return Ok(product);
         }
 
-        [Authorize]
-        [HttpPost("bulk")]
+        [HttpPost]
         public async Task<IActionResult> PostProducts([FromBody] List<Product> products)
         {
             await _repository.BulkCreate(products);
@@ -48,7 +47,6 @@ namespace GameStore.Controllers
             return Ok();
         }
 
-        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeleteAllProducts()
         {

@@ -10,7 +10,7 @@ namespace GameStore.Models
         public ObjectId _id { get; set; }
 
         [DataMember]
-        public string ProductId
+        public string Id
         {
             get { return _id.ToString(); }
             set { _id = ObjectId.Parse(value); }
@@ -19,5 +19,6 @@ namespace GameStore.Models
         public string Game { get; set; }
         public double Price { get; set; }
         public string ImgSrc { get; set; }
+        public bool IsAviable { get; set; }
     }
 }

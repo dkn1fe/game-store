@@ -1,9 +1,8 @@
-import { productItems } from "@/shared/constants/productItems";
 import { CirclePlus } from "lucide-react";
 import { Button } from "@headlessui/react";
 import { FC } from "react";
 import { useQuery } from "react-query";
-import { productType } from "@/entities/types/productType";
+import { ProductType } from "@/entities/types/productType";
 import ProductService from "@/entities/api/productService";
 
 interface ProductListProps {
@@ -13,20 +12,18 @@ interface ProductListProps {
 type ProductListPropsType = FC<ProductListProps>;
 
 export const ProductList: ProductListPropsType = ({ filter }) => {
-  
   const onGetProducts = async () => await ProductService.getAllProducts();
 
-  const { data } = useQuery(["products"], onGetProducts);
+  const { data } = useQuery(["products/getAllProducts"], onGetProducts);
 
-  const prodList = Array.isArray(data) &&  data.filter((item:productType) => {
-    if (item.status === filter) return item;
-    if (filter === "all") return productItems;
-  });
+  const prodList = data?.filter((item: ProductType) => {
+      if (item.status === filter) return item;
+      if (filter === "all") return data;
+    }) ?? [];
 
   return (
     <div className="grid grid-cols-4 gap-10 pt-16 pr-24">
-      {prodList &&
-        prodList.map((item:productType) => (
+      {prodList.map((item: ProductType) => (
           <div
             key={item.productId}
             className="relative bg-[var(--bg-card)] h-[260px] text-center rounded-lg shadow-xl"

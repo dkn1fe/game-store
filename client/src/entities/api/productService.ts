@@ -1,10 +1,15 @@
-import { productType } from "../types/productType";
+import { ProductType } from "../types/productType";
 import { baseUrl } from "./api";
 
 class ProductService {
   static async getAllProducts() {
-    const { data } = await baseUrl.get<productType>("Products");
-    return data;
+    try {
+      const { data } = await baseUrl.get<ProductType[]>("Products");
+      return data?.length ? data : [];
+    } catch(err) {
+      console.error(err);
+      throw err;
+    }
   }
 }
 

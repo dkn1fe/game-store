@@ -19,6 +19,7 @@ namespace GameStore.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
             var products = await _repository.GetAll();
@@ -42,6 +43,11 @@ namespace GameStore.Controllers
         [HttpPost]
         public async Task<IActionResult> PostProducts([FromBody] List<Product> products)
         {
+            foreach (var product in products)
+            {
+                product.CreationDate = DateTime.UtcNow;
+            }
+
             await _repository.BulkCreate(products);
 
             return Ok();

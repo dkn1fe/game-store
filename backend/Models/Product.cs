@@ -20,5 +20,6 @@ namespace GameStore.Models
         public double Price { get; set; }
         public string ImgSrc { get; set; }
         public bool IsAviable { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

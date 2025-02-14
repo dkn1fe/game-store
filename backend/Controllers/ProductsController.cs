@@ -1,28 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using GameStore.Models;
-using GameStore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using GameStore.Services;
+using GameStore.Models.Request;
 
 namespace GameStore.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/products")]
     public class ProductsController : ControllerBase
     {
         private readonly ILogger<ProductsController> _logger;
-        private readonly ProductRepository _repository;
+        private readonly ProductsService _productsService;
 
-        public ProductsController(ILogger<ProductsController> logger, ProductRepository repository)
+        public ProductsController(ILogger<ProductsController> logger, ProductsService productsService)
         {
             _logger = logger;
-            _repository = repository;
+            _productsService = productsService;
         }
 
+
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
-            var products = await _repository.GetAll();
+            var products = await _productsService.GetAll();
 
             return Ok(products);
         }
@@ -30,7 +31,7 @@ namespace GameStore.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(string id)
         {
-            var product = await _repository.GetProductById(id);
+            var product = await _productsService.GetById(id);
 
             if (product == null)
             {
@@ -40,23 +41,32 @@ namespace GameStore.Controllers
             return Ok(product);
         }
 
+
+        [Authorize(Roles = "admin,manager")]
         [HttpPost]
-        public async Task<IActionResult> PostProducts([FromBody] List<Product> products)
+        public async Task<IActionResult> CreateProducts([FromBody] List<Product> products)
         {
-            foreach (var product in products)
-            {
-                product.CreationDate = DateTime.UtcNow;
-            }
+            var result = await _productsService.BulkCreate(products);
 
-            await _repository.BulkCreate(products);
-
-            return Ok();
+            return Ok(result);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAllProducts()
+
+        [Authorize(Roles = "admin,manager")]
+        [HttpPut]
+        public async Task<ActionResult> UpdateProduct([FromBody] ProductRequest request)
         {
-            var result = await _repository.DeleteAll();
+            var result = await _productsService.Update(request);
+
+            return Ok(result);
+        }
+
+
+        [Authorize(Roles = "admin,manager")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(string id)
+        {
+            var result = await _productsService.DeleteById(id);
 
             return Ok(result);
         }

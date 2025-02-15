@@ -61,7 +61,7 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAnyOrigin");
 
 if (app.Environment.IsDevelopment())
 {

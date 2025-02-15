@@ -20,12 +20,13 @@ if (string.IsNullOrEmpty(mongoConnectionString) || string.IsNullOrEmpty(mongoDat
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
+    options.AddPolicy("AllowAnyOrigin",
         builder =>
         {
-            builder.WithOrigins(config["AllowedHosts"])
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            builder
+                .AllowAnyOrigin()  // Разрешаем запросы с любого домена
+                .AllowAnyHeader()  // Разрешаем любые заголовки
+                .AllowAnyMethod(); // Разрешаем любые HTTP-методы
         });
 });
 builder.Services.AddScoped<ProductsService>();
@@ -60,6 +61,7 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
+app.UseCors("AllowSpecificOrigin");
 
 if (app.Environment.IsDevelopment())
 {
@@ -68,7 +70,6 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 

@@ -1,6 +1,7 @@
 ﻿using GameStore.Models;
 using GameStore.Models.Requests;
 using GameStore.Utils;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
 namespace GameStore.Services
@@ -57,6 +58,17 @@ namespace GameStore.Services
 
             var existingUser = await _collection.Find(filter).FirstOrDefaultAsync();
             return existingUser;
+        }
+
+
+        public async Task<User> GetByUsernameOrEmail(string usernameOrEmail)
+        {
+            var filter = Builders<User>.Filter.Or(
+                Builders<User>.Filter.Eq(u => u.Username, usernameOrEmail),
+                Builders<User>.Filter.Eq(u => u.Email, usernameOrEmail)
+            );
+
+            return await _collection.Find(filter).FirstOrDefaultAsync();
         }
 
 

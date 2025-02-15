@@ -38,19 +38,22 @@ namespace GameStore.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            string username = request.Username;
+            string usernameOrEmail = request.Login;
             string password = request.Password;
-            var existingUser = await _userService.GetByUsername(username);
+            var existingUser = await _userService.GetByUsernameOrEmail(usernameOrEmail);
 
             if (
                 existingUser != null &&
-                username == existingUser.Username &&
+                (
+                    usernameOrEmail == existingUser.Username ||
+                    usernameOrEmail == existingUser.Email
+                ) &&
                 password == existingUser.Password
             )
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Name, usernameOrEmail),
                     new Claim(ClaimTypes.Role, existingUser.Role)
                 };
 
@@ -59,7 +62,7 @@ namespace GameStore.Controllers
 
                 await HttpContext.SignInAsync("Cookies", principal);
 
-                return Ok("Успешный вход");
+                return Ok(existingUser.ToUserDto());
             }
 
             return Unauthorized("Неверный логин или пароль");

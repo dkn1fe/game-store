@@ -14,7 +14,7 @@ export const ProductFilter = () => {
           <Button
             className={`${
               item.label === chooseFilter &&
-              "bg-orange-600 border-none duration-100"
+              "bg-purple-600 border-none duration-100"
             } bg-transparent p-1 px-4 text-white rounded-2xl border border-gray-400`}
             onClick={() => setChooseFilter(item.label)}
             key={item.id}

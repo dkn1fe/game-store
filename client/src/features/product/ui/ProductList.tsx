@@ -25,12 +25,12 @@ export const ProductList: ProductListPropsType = ({ filter }) => {
     <div className="grid grid-cols-4 gap-10 pt-16 pr-24">
       {prodList.map((item: ProductType) => (
           <div
-            key={item.productId}
+            key={item.title}
             className="relative bg-[var(--bg-card)] h-[260px] text-center rounded-lg shadow-xl"
           >
             <img
               className="absolute -top-16 left-[30%] w-32 h-32 mt-10 m-auto"
-              src={item.imgSrc}
+              src={item.img}
             />
             <h3 className="text-xl pt-32 text-[var(--white)]">{item.title}</h3>
             <p className="text-gray-300">{item.game}</p>

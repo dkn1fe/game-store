@@ -1,7 +1,7 @@
 export interface ProductType {
   game: string;
   price: number;
-  imgSrc: string;
+  img: string;
   status?: string;
   title: string;
   productId: string;

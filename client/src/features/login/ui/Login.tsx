@@ -2,8 +2,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button } from "@headlessui/react";
 import { useMutation } from "react-query";
 import { LoginType } from "@/entities/types/authType";
+import { useEffect } from "react";
 import AuthService from "@/entities/api/authService";
 import * as Yup from "yup";
+import { onGetIsAdmin } from "@/shared/helpers/localStorage.helper";
+import { useNavigate } from "react-router-dom";
+import { useAdminStore } from "@/shared/zustand/adminStore";
 
 const LoginSchema = Yup.object().shape({
   login: Yup.string().required("Логин обязателен").trim(),
@@ -11,9 +15,20 @@ const LoginSchema = Yup.object().shape({
 });
 
 export const Login = () => {
-  const handleLogin = async ({ login, password }:LoginType) => {
-    return await AuthService.login({ login, password });
+  const setAdminInfo = useAdminStore((state: any) => state.setAdminInfo);
+
+  const handleLogin = async ({ login, password }: LoginType) => {
+    return await AuthService.login({ login, password }).then((res) =>
+      setAdminInfo(res)
+    );
   };
+  
+  const navigate = useNavigate();
+  const isAdmin = onGetIsAdmin();
+
+  useEffect(() => {
+    if (isAdmin) navigate("/admin");
+  }, [isAdmin]);
 
   const { mutate } = useMutation({
     mutationFn: handleLogin,
@@ -23,19 +38,25 @@ export const Login = () => {
     <div className="flex items-center pt-40 p-4 bg-[var(--main-color)] justify-center pl-52">
       <div className="flex flex-col overflow-hidden rounded-lg shadow-xl md:flex-row w-full lg:max-w-[500px]">
         <div className="p-5 bg-[var(--main-color)] h-[420px] md:flex-1">
-          <h3 className="my-4 text-2xl text-[var(--white)] font-semibold">Account Login</h3>
+          <h3 className="my-4 text-2xl text-[var(--white)] font-semibold">
+            Account Login
+          </h3>
           <Formik
             initialValues={{ login: "", password: "" }}
             validationSchema={LoginSchema}
             onSubmit={(values, { setSubmitting }) => {
               mutate(values);
+              // setAdminInfo(values)
               setSubmitting(false);
             }}
           >
             {({ isSubmitting }) => (
               <Form className="flex flex-col space-y-7">
                 <div className="flex flex-col space-y-2">
-                  <label htmlFor="login" className="text-sm font-semibold text-[var(--text-login)]">
+                  <label
+                    htmlFor="login"
+                    className="text-sm font-semibold text-[var(--text-login)]"
+                  >
                     Login
                   </label>
                   <Field

@@ -3,9 +3,9 @@ import { instance } from "./api";
 import { LoginType } from "../types/authType";
 
 class AuthService {
-  static async login({ login, password }:LoginType) {
+  static async login({ login, password }: LoginType) {
     const { data } = await instance.post("login", { login, password });
-    onChangeIsAdmin(data?.role)
+    onChangeIsAdmin(data?.role);
     return data;
   }
 }

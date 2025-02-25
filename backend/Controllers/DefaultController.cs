@@ -1,5 +1,4 @@
-﻿using GameStore.Models;
-using GameStore.Models.Requests;
+﻿using GameStore.Models.Requests;
 using GameStore.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +69,7 @@ namespace GameStore.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User request)
+        public async Task<IActionResult> Register([FromForm] UserRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -81,10 +80,10 @@ namespace GameStore.Controllers
 
             if (user == null)
             {
-                return BadRequest(new { message = "Пользователь с таким именем уже существует." });
+                return BadRequest(new { message = "Пользователь с таким username или email уже существует." });
             }
 
-            return Ok(user.ToUserDto());
+            return Ok(user);
         }
 
 

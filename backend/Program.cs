@@ -2,14 +2,16 @@
 using GameStore.Infrastructure;
 using GameStore.Authentication;
 using GameStore.Services;
+using dotenv.net;
 
+DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
 
-var mongoConnectionString = "mongodb+srv://lass:1@cluster0.xbtinu8.mongodb.net/"; // Environment.GetEnvironmentVariable("DB_URI")
+var mongoConnectionString = Environment.GetEnvironmentVariable("DB_URI");
 var mongoDatabaseName = config["MongoDatabase"];
 
 if (string.IsNullOrEmpty(mongoConnectionString) || string.IsNullOrEmpty(mongoDatabaseName))
@@ -58,6 +60,20 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOrManager", policy => policy.RequireRole("admin", "manager"));
 });
 
+/*Cloudinary cloudinary = new Cloudinary(
+    new Account(
+        "game-store",
+        "628253984556481",
+        "frYK0CARqvHyXcg2q9NvVazOOE8"
+    )
+);*/
+// cloudinary.Api.Secure = true;
+
+
+/*
+DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+Cloudinary cloudinary = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+cloudinary.Api.Secure = true;*/
 
 var app = builder.Build();
 

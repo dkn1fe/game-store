@@ -35,7 +35,7 @@ namespace GameStore.Controllers
 
             if (product == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             return Ok(product);
@@ -43,10 +43,10 @@ namespace GameStore.Controllers
 
 
         [Authorize(Roles = "admin,manager")]
-        [HttpPost]
-        public async Task<IActionResult> CreateProducts([FromBody] List<Product> products)
+        [HttpPost("create")]
+        public async Task<ActionResult> CreateProduct([FromForm] ProductRequest product)
         {
-            var result = await _productsService.BulkCreate(products);
+            var result = await _productsService.Create(product);
 
             return Ok(result);
         }
@@ -54,9 +54,14 @@ namespace GameStore.Controllers
 
         [Authorize(Roles = "admin,manager")]
         [HttpPut]
-        public async Task<ActionResult> UpdateProduct([FromBody] ProductRequest request)
+        public async Task<ActionResult> UpdateProduct([FromForm] ProductRequest request)
         {
             var result = await _productsService.Update(request);
+
+            if (result == null)
+            {
+                return BadRequest();
+            }
 
             return Ok(result);
         }
@@ -67,6 +72,11 @@ namespace GameStore.Controllers
         public async Task<ActionResult> DeleteProduct(string id)
         {
             var result = await _productsService.DeleteById(id);
+
+            if (result == null)
+            {
+                return BadRequest();
+            }
 
             return Ok(result);
         }

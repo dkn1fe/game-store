@@ -1,5 +1,4 @@
-﻿using GameStore.Models.Dto;
-using GameStore.Models.Requests;
+﻿using GameStore.Models.Requests;
 using GameStore.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,18 +21,23 @@ namespace GameStore.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public async Task<ActionResult<List<UserDto>>> GetUsers()
+        public async Task<ActionResult> GetUsers()
         {
-            var users = await _userService.GetAll();
-            return Ok(users.Select(user => user.ToUserDto()));
+            var result = await _userService.GetAll();
+            return Ok(result);
         }
 
 
         [Authorize(Roles = "admin")]
         [HttpPut]
-        public async Task<ActionResult> UpdateUser([FromBody] UserRequest request)
+        public async Task<ActionResult> UpdateUser([FromForm] UserRequest request)
         {
             var result = await _userService.Update(request);
+
+            if (result == null)
+            {
+                return BadRequest();
+            }
 
             return Ok(result);
         }
@@ -43,14 +47,14 @@ namespace GameStore.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(string id)
         {
-            var user = await _userService.GetById(id);
+            var result = await _userService.GetById(id);
 
-            if (user == null)
+            if (result == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            return Ok(user.ToUserDto());
+            return Ok(result);
         }
 
 
@@ -69,17 +73,12 @@ namespace GameStore.Controllers
         {
             var result = await _userService.DeleteById(id);
 
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(result);
         }
-
-
-        /*[Authorize(Roles = "admin")]
-        [HttpDelete("api/users")]
-        public async Task<ActionResult> DeleteUsers()
-        {
-            var result = await _userService.DeleteAll();
-
-            return Ok(result);
-        }*/
     }
 }

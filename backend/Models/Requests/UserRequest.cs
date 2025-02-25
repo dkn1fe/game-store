@@ -1,11 +1,10 @@
-﻿using GameStore.Models.Dto;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GameStore.Models.Requests
 {
     public class UserRequest
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Имя пользователя должно быть от 3 до 100 символов.")]
         public string? Username { get; set; }
@@ -18,19 +17,6 @@ namespace GameStore.Models.Requests
 
         public string? Role { get; set; }
 
-        [Url(ErrorMessage = "Некорректный URL изображения.")]
-        public string? Img { get; set; }
-
-        public UserDto ToUserDto()
-        {
-            return new UserDto
-            {
-                Id = Id,
-                Username = Username,
-                Email = Email,
-                Role = Role,
-                Img = Img,
-            };
-        }
+        public IFormFile? Img { get; set; }
     }
 }

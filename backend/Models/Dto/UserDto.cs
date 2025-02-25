@@ -9,8 +9,7 @@ namespace GameStore.Models.Dto
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
-        [BsonElement("Time")]
-        public DateTime CreateDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public string Username { get; set; }
 

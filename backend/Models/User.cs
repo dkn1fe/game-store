@@ -11,9 +11,6 @@ namespace GameStore.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
-        [BsonElement("Time")]
-        public DateTime CreateDate { get; set; }
-
         [Required(ErrorMessage = "Имя пользователя обязательно.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Имя пользователя должно быть от 3 до 100 символов.")]
         public string Username { get; set; }
@@ -29,8 +26,11 @@ namespace GameStore.Models
         [Required(ErrorMessage = "Роль обязательна.")]
         public string Role { get; set; }
 
-        [Url(ErrorMessage = "Некорректный URL изображения.")]
+        public DateTime CreationDate { get; set; }
+
         public string? Img { get; set; }
+
+        public string? ImgId { get; set; }
 
         public UserDto ToUserDto()
         {
@@ -39,7 +39,7 @@ namespace GameStore.Models
                 Id = Id,
                 Username = Username,
                 Email = Email,
-                CreateDate = CreateDate,
+                CreationDate = CreationDate,
                 Role = Role,
                 Img = Img,
             };

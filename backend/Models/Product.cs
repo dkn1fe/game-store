@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using System.ComponentModel.DataAnnotations;
+using GameStore.Models.Dto;
 
 namespace GameStore.Models
 {
@@ -26,8 +27,24 @@ namespace GameStore.Models
         [Url(ErrorMessage = "Некорректный URL изображения.")]
         public string Img { get; set; }
 
+        public string? ImgId { get; set; }
+
         public bool IsAviable { get; set; }
 
         public DateTime CreationDate { get; set; }
+
+        public ProductDto ToProductDto()
+        {
+            return new ProductDto
+            {
+                Id = Id,
+                Title = Title,
+                Game = Game,
+                Price = Price,
+                Img = Img,
+                IsAviable = IsAviable,
+                CreationDate = CreationDate,
+            };
+        }
     }
 }

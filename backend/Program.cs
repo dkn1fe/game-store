@@ -60,21 +60,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOrManager", policy => policy.RequireRole("admin", "manager"));
 });
 
-/*Cloudinary cloudinary = new Cloudinary(
-    new Account(
-        "game-store",
-        "628253984556481",
-        "frYK0CARqvHyXcg2q9NvVazOOE8"
-    )
-);*/
-// cloudinary.Api.Secure = true;
-
-
-/*
-DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
-Cloudinary cloudinary = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
-cloudinary.Api.Secure = true;*/
-
 var app = builder.Build();
 
 app.UseCors("AllowAnyOrigin");

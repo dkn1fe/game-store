@@ -1,6 +1,11 @@
-import { Button, Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+import {
+  Button,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+} from "@headlessui/react";
 import { AdminType } from "@/entities/types/authType";
-import { Settings,LogOut } from "lucide-react";
+import { Settings, LogOut } from "lucide-react";
 import { FC } from "react";
 
 interface PopoverListProps {
@@ -12,7 +17,7 @@ type PopoverListPropsType = FC<PopoverListProps>;
 export const PopoverList: PopoverListPropsType = ({ data }) => {
   return (
     <Popover>
-      <PopoverButton className = 'focus:outline-none'>
+      <PopoverButton className="focus:outline-none">
         <img className="w-12 h-12" src={data.img} />
       </PopoverButton>
       <PopoverPanel
@@ -29,12 +34,12 @@ export const PopoverList: PopoverListPropsType = ({ data }) => {
             <h4 className="text-xl font-bold">Role</h4>
             <p className="uppercase">{data.role}</p>
           </div>
-          <Button className ="flex items-center justify-center gap-3 mt-4 p-3 rounded-lg duration-100 hover:bg-gray-600">
-            <Settings size = {18}/>
+          <Button className="flex items-center justify-center gap-3 mt-4 p-3 rounded-lg duration-100 hover:bg-gray-600">
+            <Settings size={18} />
             Settings
           </Button>
-          <Button className = "flex items-center justify-center gap-3 p-3 rounded-lg duration-100 hover:bg-red-600">
-            <LogOut size = {18}/>
+          <Button className="flex items-center justify-center gap-3 p-3 rounded-lg duration-100 hover:bg-red-600">
+            <LogOut size={18} />
             Log Out
           </Button>
         </div>
@@ -42,12 +47,3 @@ export const PopoverList: PopoverListPropsType = ({ data }) => {
     </Popover>
   );
 };
-
-// {/* <div className="flex gap-3 items-center">
-// {/* <div className="flex flex-col items-end">
-//   <p className="text-[var(--white)] font-bold">
-//     {adminInfo.username}
-//   </p>
-// </div> */}
-// <img className="w-12 h-12" src={adminInfo.img} />
-// </div> */}

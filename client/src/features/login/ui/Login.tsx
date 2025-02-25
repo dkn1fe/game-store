@@ -22,7 +22,7 @@ export const Login = () => {
       setAdminInfo(res)
     );
   };
-  
+
   const navigate = useNavigate();
   const isAdmin = onGetIsAdmin();
 
@@ -46,7 +46,6 @@ export const Login = () => {
             validationSchema={LoginSchema}
             onSubmit={(values, { setSubmitting }) => {
               mutate(values);
-              // setAdminInfo(values)
               setSubmitting(false);
             }}
           >

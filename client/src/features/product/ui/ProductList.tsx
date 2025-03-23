@@ -1,9 +1,8 @@
 import { CirclePlus } from "lucide-react";
 import { Button } from "@headlessui/react";
 import { FC } from "react";
-import { useQuery } from "react-query";
 import { ProductType } from "@/entities/types/productType";
-import ProductService from "@/entities/api/productService";
+import { useProducts } from "@/shared/hooks/useProducts";
 
 interface ProductListProps {
   filter: string;
@@ -12,14 +11,8 @@ interface ProductListProps {
 type ProductListPropsType = FC<ProductListProps>;
 
 export const ProductList: ProductListPropsType = ({ filter }) => {
-  const onGetProducts = async () => await ProductService.getAllProducts();
-
-  const { data } = useQuery(["products/getAllProducts"], onGetProducts);
-
-  const prodList = data?.filter((item: ProductType) => {
-      if (item.status === filter) return item;
-      if (filter === "all") return data;
-    }) ?? [];
+  
+  const {prodList} = useProducts({filter})
 
   return (
     <div className="grid grid-cols-4 gap-10 pt-16 pr-24">

@@ -1,5 +1,5 @@
 import { linksMenu } from "@/shared/constants/linksMenu";
-import { Button } from "@headlessui/react";
+import { Link } from "react-router-dom";
 
 export const LinksMenu = () => {
   return (
@@ -14,16 +14,17 @@ export const LinksMenu = () => {
         <div className="grid grid-cols-2 pt-10 gap-4">
           {linksMenu &&
             linksMenu.map((item) => (
-              <Button
+              <Link
+                to = {item.link}
                 className="py-2 px-10 font-medium bg-[#e8590c] rounded-lg text-[var(--white)] flex justify-center"
                 key={item.id}
               >
                 {item.title}
-              </Button>
+              </Link>
             ))}
-          <Button className="col-span-2 py-2 px-10 font-medium border border-[#e8590c] rounded-lg text-[var(--white)] flex justify-center">
+          <Link to = '/' className="col-span-2 py-2 px-10 font-medium border border-[#e8590c] rounded-lg text-[var(--white)] flex justify-center">
             Перейти на Сайт
-          </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export const HeaderPanel = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center py-5  px-10">
+      <div className="flex justify-between items-center py-5 px-10">
         <h3 className="text-5xl font-medium text-[var(--white)]">Game-Store</h3>
         <div className="flex items-center gap-3">
           {adminInfo && <PopoverList data={adminInfo} />}

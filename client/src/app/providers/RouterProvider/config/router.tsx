@@ -5,6 +5,7 @@ import { Login } from "@/features/login";
 import { AdminRootPage } from "@/pages/AdminRoot";
 import { AdminLinksPage } from "@/pages/AdminLinks";
 import { PrivateRoute } from "./privateRouter";
+import { ProductsPage } from "@/pages/Products";
 
 export const mainRoutes = [
   {
@@ -33,6 +34,14 @@ export const adminRoutes = [
         element: (
           <PrivateRoute>
             <AdminLinksPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/admin/products",
+        element: (
+          <PrivateRoute>
+            <ProductsPage/>
           </PrivateRoute>
         ),
       },

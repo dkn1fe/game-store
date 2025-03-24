@@ -5,4 +5,6 @@ export interface ProductType {
   status?: string;
   title: string;
   productId: string;
+  id:string,
+  creationDate:string,
 }
